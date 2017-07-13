@@ -1,20 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import TasksList from './app/components/TasksList';
 
-export default class App extends React.Component {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome!
-        </Text>
-        <Text style={styles.instructions}>
-          This is not the official Home4Students app
-        </Text>
-        <Text style={styles.instructions}>
-          ...but hopefully it can make{'\n'}
-          our life easier :)
-        </Text>
+        <TasksList/>
       </View>
     );
   }
