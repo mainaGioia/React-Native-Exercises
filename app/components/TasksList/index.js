@@ -24,9 +24,9 @@ export default class TasksList extends Component {
 		return (
 			<ListView 
 			dataSource = { this.state.dataSouce }
-			renderRow = ( (rowData) => <Text> (rowData) </Text> )
-			/>);
-
+			renderRow = { (rowData) => <Text> {rowData} </Text> }
+			/>
+            );
 		
 	}
 
