@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, Text, TextInput, View } from 'react-native';
+import { ListView, Text, TextInput, View, AsyncStorage } from 'react-native';
 import styles from './styles';
 
 export default class TasksList extends Component {
@@ -11,14 +11,14 @@ export default class TasksList extends Component {
 		// });
 		this.state = {
 			ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-			//items: ['buy milk', 'walk the dog', 'do the laundry'],
-			items: [],
+			//listOfTasks: ['buy milk', 'walk the dog', 'do the laundry'],
+			listOfTasks: [],
 			text: 'Type here'
 		};
 	}
 
 	render() {
-		const dataSource = this.state.ds.cloneWithRows(this.state.items);
+		const dataSource = this.state.ds.cloneWithRows(this.state.listOfTasks);
 		return (
 			<View style={ styles.container }>
 				<TextInput
@@ -40,10 +40,10 @@ export default class TasksList extends Component {
 
 
 
-	_addTask(){
-		const items = [...this.state.items, this.state.text];
-		this.setState({items});
-		this._changeTextInputValue('');
+	async _addTask(){
+		const listOfTasks = [...this.state.listOfTasks, this.state.text];
+		await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
+		await this._updateList;
 	}
 
 	_changeTextInputValue(text){
@@ -52,6 +52,17 @@ export default class TasksList extends Component {
 
 	_renderRowData(rowData){
 		return (<Text>{rowData}</Text>)
+	}
+
+	componentDidMount(){
+		this._updateList();
+	}
+
+	async _updateList(){
+		let response = await AsyncStorage.getItem('listOfTasks');
+		let listOfTasks = await JSON.parse(response) || [];
+		this.setState({listOfTasks});
+		this._changeTextInputValue('');
 	}
 
 }
