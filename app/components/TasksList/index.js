@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { ListView, Text } from 'react-native';
 
 export default class TasksList extends Component {
-	
+
 	constructor(props) {
 		super(props);
-		
+
 		const ds = new ListView.DataSource({
 			rowHasChanged: (r1, r2) => r1 !== r2
 		});
@@ -22,12 +22,12 @@ export default class TasksList extends Component {
 
 	render() {
 		return (
-			<ListView 
-			dataSource = { this.state.dataSouce }
+			<ListView
+			dataSource = { this.state.dataSource }
 			renderRow = { (rowData) => <Text> {rowData} </Text> }
 			/>
             );
-		
+
 	}
 
 }
