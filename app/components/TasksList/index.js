@@ -13,7 +13,7 @@ export default class TasksList extends Component {
 			ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
 			//items: ['buy milk', 'walk the dog', 'do the laundry'],
 			items: [],
-			text: 'ciao'
+			text: 'Type here'
 		};
 	}
 
