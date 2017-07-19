@@ -38,8 +38,6 @@ export default class TasksList extends Component {
 		);
 	}
 
-
-
 	async _addTask(){
 		const listOfTasks = [...this.state.listOfTasks, this.state.text];
 		try {
