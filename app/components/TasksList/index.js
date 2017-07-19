@@ -42,8 +42,13 @@ export default class TasksList extends Component {
 
 	async _addTask(){
 		const listOfTasks = [...this.state.listOfTasks, this.state.text];
-		await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
-		await this._updateList;
+		try {
+			await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
+		}
+		catch (error) {
+			console.log('error setting data');
+		}
+		this._updateState(listOfTasks);
 	}
 
 	_changeTextInputValue(text){
@@ -54,15 +59,26 @@ export default class TasksList extends Component {
 		return (<Text>{rowData}</Text>)
 	}
 
+	_updateState(listOfTasks){
+		this.setState({listOfTasks});
+		this._changeTextInputValue('');
+	}
+
 	componentDidMount(){
 		this._updateList();
 	}
 
 	async _updateList(){
-		let response = await AsyncStorage.getItem('listOfTasks');
-		let listOfTasks = await JSON.parse(response) || [];
-		this.setState({listOfTasks});
-		this._changeTextInputValue('');
+		try {
+			let response = await AsyncStorage.getItem('listOfTasks');
+			let listOfTasks = await JSON.parse(response) || [];
+			this._updateState(listOfTasks);
+		}
+		catch (error) {
+			console.log('error retrieving data');
+		}
 	}
+
+
 
 }
