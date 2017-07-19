@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { ListView, Text, TextInput, View, AsyncStorage } from 'react-native';
+import { TasksListItem } from '../TasksListItem';
 import styles from './styles';
 
 export default class TasksList extends Component {
 
 	constructor(props) {
 		super(props);
-		// const ds = new ListView.DataSource({
-		// 	rowHasChanged: (r1, r2) => r1 !== r2
-		// });
 		this.state = {
 			ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
 			//listOfTasks: ['buy milk', 'walk the dog', 'do the laundry'],
@@ -35,10 +33,12 @@ export default class TasksList extends Component {
 					renderRow = { (rowData) => this._renderRowData(rowData) }
 				/>
 			</View>
-		);
+		)
 	}
 
+
 	async _addTask(){
+		const singleTask = { completed: false, text: this.state.text };
 		const listOfTasks = [...this.state.listOfTasks, this.state.text];
 		try {
 			await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
@@ -53,8 +53,18 @@ export default class TasksList extends Component {
 		this.setState({text});
 	}
 
-	_renderRowData(rowData){
-		return (<Text>{rowData}</Text>)
+	_renderRowData(rowData, rowID){
+		return (
+			<TasksListItem
+				completed = { rowData.completed }
+				id = { rowID }
+				onPress = { (rowID) => this._completeTask(rowID) }
+				text = { rowData.text }
+			/>)
+	}
+
+	_completeTask (rowId) {
+		
 	}
 
 	_updateState(listOfTasks){
