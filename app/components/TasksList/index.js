@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ListView, Text, TextInput, View, AsyncStorage } from 'react-native';
-import { TasksListItem } from '../TasksListItem';
+
+import TasksListItem from '../TasksListItem';
 import styles from './styles';
 
 export default class TasksList extends Component {
@@ -30,7 +31,8 @@ export default class TasksList extends Component {
 				<ListView
 					dataSource = { dataSource }
 					enableEmptySections={ true }
-					renderRow = { (rowData) => this._renderRowData(rowData) }
+					renderRow = { (rowData, sectionID, rowID) =>
+						this._renderRowData(rowData, rowID) }
 				/>
 			</View>
 		)
@@ -39,7 +41,7 @@ export default class TasksList extends Component {
 
 	async _addTask(){
 		const singleTask = { completed: false, text: this.state.text };
-		const listOfTasks = [...this.state.listOfTasks, this.state.text];
+		const listOfTasks = [...this.state.listOfTasks, singleTask];
 		try {
 			await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
 		}
@@ -49,11 +51,14 @@ export default class TasksList extends Component {
 		this._updateState(listOfTasks);
 	}
 
+
 	_changeTextInputValue(text){
 		this.setState({text});
 	}
 
+
 	_renderRowData(rowData, rowID){
+		console.log(rowData, rowID, rowData.completed);
 		return (
 			<TasksListItem
 				completed = { rowData.completed }
@@ -63,9 +68,24 @@ export default class TasksList extends Component {
 			/>)
 	}
 
-	_completeTask (rowId) {
-		
+
+	async _completeTask (rowID) {
+		console.log('rowId'+ rowID);
+		try {
+			const singleUpdatedTask = {
+				...this.state.listOfTasks[rowID],
+				completed: !this.state.listOfTasks[rowID].completed
+			};
+			const listOfTasks = this.state.listOfTasks.slice();
+			listOfTasks[rowID] = singleUpdatedTask;
+			await AsyncStorage.setItem('listOfTasks', JSON.stringify(listOfTasks));
+		}
+		catch (error) {
+			console.log('error updating the list');
+		}
+		this._updateList();
 	}
+
 
 	_updateState(listOfTasks){
 		this.setState({listOfTasks});
