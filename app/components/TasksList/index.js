@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ListView, Text, TextInput, View, AsyncStorage } from 'react-native';
 
 import TasksListItem from '../TasksListItem';
+import EditTask from '../EditTask';
 import styles from './styles';
 
 export default class TasksList extends Component {
@@ -31,6 +32,8 @@ export default class TasksList extends Component {
 				<ListView
 					dataSource = { dataSource }
 					enableEmptySections={ true }
+					automaticallyAdjustContentInsets={ false }
+					style={ styles.listView }
 					renderRow = { (rowData, sectionID, rowID) =>
 						this._renderRowData(rowData, rowID) }
 				/>
