@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ListView, Text, TextInput, View, AsyncStorage } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
 import TasksListItem from '../TasksListItem';
 import EditTask from '../EditTask';
@@ -16,6 +17,11 @@ export default class TasksList extends Component {
 			text: 'Type here'
 		};
 	}
+
+	static navigationOptions= {
+		title: 'Tasks List',
+	};
+
 
 	render() {
 		const dataSource = this.state.ds.cloneWithRows(this.state.listOfTasks);
@@ -113,3 +119,5 @@ export default class TasksList extends Component {
 
 
 }
+
+const Home4Students = StackNavigator({Home:{screen: TasksList}});
