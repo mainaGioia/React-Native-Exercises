@@ -3,5 +3,7 @@
     "sdkVersion": "18.0.0",
     "name": "Home 4 Students",
     "icon": "./app/images/icon.png"
-  }
+  },
+  "name": "ReactNativeExercises",
+  "displayName": "Tasks List"
 }
