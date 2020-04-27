@@ -12,6 +12,7 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "icon": "assets/icon.png"
   }
 }
