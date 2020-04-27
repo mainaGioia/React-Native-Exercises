@@ -15,9 +15,7 @@ export default class SearchInput extends React.Component {
     }
 
     handleSubmitEditing = () => {
-        if (!this.state.text) 
-            return;
-            console.log(this.state.text);
+        if (!this.state.text) return;
 
         this.props.onSubmit(this.state.text);
         this.setState({text: ''});
