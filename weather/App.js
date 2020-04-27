@@ -7,31 +7,41 @@ import {
 import getImageForWeather from './utils/getImageForWeather';
 import SearchInput from './components/SearchInput';
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
 
-const city = "San Francisco";
-const weather = "Light Cloud";
-const temperature = "24°";
+export default class App extends React.Component {
 
-export default function App() {
-  return (
-    <KeyboardAvoidingView style={styles.container} behaviour="padding">
-      <ImageBackground
-        source={getImageForWeather('Clear')}
-        style={styles.imageContainer}
-        imageStyle={styles.image}>
-        <View style={styles.detailsContainer}>
-          <Text style={[styles.largeText, styles.textStyle]}>{city}</Text>
-          <Text style={[styles.smallText, styles.textStyle]}>{weather}</Text>
-          <Text style={[styles.largeText, styles.textStyle]}>{temperature}</Text>
-          <SearchInput placeholder="Search any city"/>
-        </View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
-  );
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: "Innsbruck",
+    };
+  }
+
+  handleUpdateCity = city => {
+    this.setState({city});
+  }
+
+  render() {
+    const weather = "Light Cloud";
+    const temperature = "24°";
+    return (
+      <KeyboardAvoidingView style={styles.container} behaviour="padding">
+        <ImageBackground
+          source={getImageForWeather('Clear')}
+          style={styles.imageContainer}
+          imageStyle={styles.image}>
+          <View style={styles.detailsContainer}>
+            <Text style={[styles.largeText, styles.textStyle]}>{this.state.city}</Text>
+            <Text style={[styles.smallText, styles.textStyle]}>{weather}</Text>
+            <Text style={[styles.largeText, styles.textStyle]}>{temperature}</Text>
+            <SearchInput placeholder="Search any city"
+                          onSubmit={this.handleUpdateCity}/>
+          </View>
+        </ImageBackground>
+      </KeyboardAvoidingView>
+    );
+  }
+  
 }
 
 const styles = StyleSheet.create({
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'center',
     fontFamily: Platform.OS === 'ios' ? 'AvenirNext-Regular': 'Roboto',
+    color: 'white',
   },
   largeText: {
     fontSize: 44,
