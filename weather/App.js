@@ -46,7 +46,6 @@ export default class App extends React.Component {
           loading: false, 
           error: true,
         });
-        console.log(`https://www.metaweather.com/api/location/search/?query=${location}`);
         console.log(e);
       }
 
