@@ -1,6 +1,8 @@
 # Weather 
 
 Weather app that displays the current temperature and a background image representing the weather in the chosen location. 
+<br/>
+<br/>
 
 
 <div align="center">
