@@ -4,4 +4,4 @@ Weather app that displays the current temperature and a background image represe
 
 Android            |  iOS
 :-------------------------:|:-------------------------:
-<img src="screens/android.png" height="150"/>  |  <img src="screens/iOS.png" height="150"/>
+<img src="screens/android.png" height="500"/>  |  <img src="screens/iOS.png" height="500"/>
